@@ -100,4 +100,8 @@ public class MyCarsController {
         cars.add(car);
     }
 
+    clearCarForm(){
+
+    }
+
 }
