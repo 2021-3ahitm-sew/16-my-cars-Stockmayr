@@ -125,4 +125,5 @@ public class MyCarsController {
         firstHalfCheckBox.addEventFilter(InputEvent.ANY, inputEvent -> inputEvent.consume());
         secondHalfCheckBox.addEventFilter(InputEvent.ANY, inputEvent -> inputEvent.consume());
     }
+    //test
 }
