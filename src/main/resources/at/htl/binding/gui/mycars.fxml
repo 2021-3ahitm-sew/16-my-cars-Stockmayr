@@ -48,7 +48,7 @@
          <children>
             <CheckBox fx:id="firstCheckBox" mnemonicParsing="false" text="First" />
             <CheckBox fx:id="firstHalfCheckBox" mnemonicParsing="false" text="1st Half" />
-            <CheckBox fx:id="secondHalfCheckBox" disable="true" mnemonicParsing="false" text="2nd Half" />
+            <CheckBox fx:id="secondHalfCheckBox" mnemonicParsing="false" text="2nd Half" />
             <CheckBox fx:id="lastCheckBox" mnemonicParsing="false" text="Last" />
          </children>
          <padding>

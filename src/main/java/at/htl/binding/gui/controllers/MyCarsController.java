@@ -2,12 +2,14 @@ package at.htl.binding.gui.controllers;
 
 import at.htl.binding.model.cars.Car;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.input.InputEvent;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -50,6 +52,7 @@ public class MyCarsController {
         initListView();
         bindCheckBoxes();
         initCarForm();
+        filterCheckBoxEvents();
     }
 
     private void initListView() {
@@ -77,17 +80,22 @@ public class MyCarsController {
     private void initCarForm() {
         makerComboBox.setItems(makers.sorted());
 
+        registrationDatePicker.setValue(LocalDate.now());
+
+        System.out.println(registrationDatePicker.getValue().getYear());
+
         creationYearSpinner.setValueFactory(
                 new IntegerSpinnerValueFactory(1980, LocalDate.now().getYear(), 2018)
         );
 
         addButton.setOnAction(actionEvent -> addCar());
         addButton.setOnAction(actionEvent -> clearCarForm());
+        IntegerBinding registrationYear = Bindings.selectInteger(registrationDatePicker.valueProperty(), "year");
+        IntegerBinding creationYear = Bindings.selectInteger(creationYearSpinner.valueProperty());
         addButton.disableProperty().bind(
-                modelTextField.textProperty().isEmpty()
-                .or(makerComboBox.valueProperty().isNull())
-                .or(registrationDatePicker.valueProperty().isNull())
+                registrationYear.lessThan(creationYear)
         );
+
     }
 
     private void addCar() {
@@ -111,7 +119,10 @@ public class MyCarsController {
         electricCheckBox.setSelected(false);
     }
 
-    /*private void filterCheckBoxEvent(){
+    private void filterCheckBoxEvents() {
         firstCheckBox.addEventFilter(InputEvent.ANY, inputEvent -> inputEvent.consume());
-    }*/
+        lastCheckBox.addEventFilter(InputEvent.ANY, inputEvent -> inputEvent.consume());
+        firstHalfCheckBox.addEventFilter(InputEvent.ANY, inputEvent -> inputEvent.consume());
+        secondHalfCheckBox.addEventFilter(InputEvent.ANY, inputEvent -> inputEvent.consume());
+    }
 }
